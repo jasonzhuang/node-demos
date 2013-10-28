@@ -1,29 +1,37 @@
 (function execute(){
-    //buffer();
-    //utilUse();
     //emitter();
-    //process();
-    module();
+    //module();
+    //schedule()
+    fun();
 })();
 
+function fun(){
+   setTimeout(function(){
+       console.log(process.uptime());
+   }, 3000)
+}
+
+/**
+ * module is singleton, cached, only initialize once.
+ */
 function module(){
-    var util = require("util");
-    
-    var Rect = require("./rect");
-    console.log(Rect);//{ create: [Function], Rect: [Function: Rect]}
+    var Rect = require("./sample");
+    var Rect2 = require('./sample');
+    console.log("core get Rect");
+    var anotherPlace = function(){
+        var Rect3 = require('./sample');
+        console.log("anotherPlace");
+    }
+    anotherPlace();
 }
 
-function process(){
-    var spawn = require("child_process").spawn,
-        grep = spawn("dir");
-    console.log("Spawned child pid: " + grep.id);
-    grep.stdin.end();
-}
-
+/**
+ * this refers to the EventEmitter that the listener was attached to
+ */
 function emitter(){
     var EventEmitter = require('events').EventEmitter,
         util = require("util");
-    var Ticker = function(){
+    /*var Ticker = function(){
         var self = this;
         setInterval(function(){
             self.emit("tick");
@@ -34,24 +42,46 @@ function emitter(){
     
     var ticker = new Ticker();
     ticker.on("tick", function(){
+        console.log(this instanceof Ticker);//true
         console.log("tick...");
-    });
-}
+    });*/
 
-function utilUse(){
-    var util = require("util");
-    console.log(util.inspect({name:'yougen'},{showHidden:true}));
-}
-
-function buffer(){
-    var buffer = new Buffer(100);
-    for(var i=0;i<100;i++) {
-        buffer[i] = i;
+    function StreamLib(resouce) {
+        //this.emit('start'); this will not work
+        var self = this;
+         process.nextTick(function(){
+             console.log(self)
+             self.emit('start');
+         });
     }
-    //var sliced = buffer.slice(40, 60);
-    // for(var i=0;i<sliced.length;i++){
-        // console.log(sliced[i]);
-    // }
-    var buff2 = new Buffer(20);
-    buffer.copy(buff2, 0, 0 ,20);
+
+    util.inherits(StreamLib, EventEmitter);
+
+    var stream = new StreamLib('foo');
+
+    stream.on('start', function(){
+      console.log("Reading has started");
+    })
+}
+
+/**
+ * process.nextTick() vs setTimeout(fn, 0)
+ * http://howtonode.org/understanding-process-next-tick
+ */
+function schedule(){
+    function foo(){
+        console.log("foo");
+    }
+
+    function bar(){
+        console.log("bar");
+    }
+
+    /*(function doTick(){
+        process.nextTick(foo);
+        console.log('bar');
+    }());*/
+
+    setTimeout(foo, 2000);
+    process.nextTick(bar);
 }

@@ -160,6 +160,5 @@ $(function() {
 	setInterval(function() {
 		$('#currentTime').text(App.util.timeString(new Date()));
 	}, 1000);
-
 });
 

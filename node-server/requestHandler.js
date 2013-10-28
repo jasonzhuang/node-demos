@@ -1,5 +1,5 @@
 /**
- * 
+ * ======block way========
  function start(){
     console.log("Request handler 'start' was called");
     
@@ -13,9 +13,7 @@
     return "Hello Start";
 }
 **/
-
-var querystring = require("querystring"),
-    fs = require("fs");
+var fs = require("fs");
     formidable = require("formidable");
     path = require("path");
     mime = require("mime");

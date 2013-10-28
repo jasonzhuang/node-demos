@@ -1,9 +1,46 @@
 (function execute(){
-    //header();
-    //claw();
+    postData()
+    //pipeFile()
     //serveFile();
     //saveBody();
 })();
+
+/**
+ * curl -F username='yougen' -F vip=true http://localhost:4000/
+ */
+function postData() {
+    console.log("play...");
+    var qs = require('querystring');
+    var util = require('util');
+    require('http').createServer(function(req, res) {
+        if (req.method == 'POST') {
+            var body = '';
+            req.on('data', function (data) {
+                body += data;
+                console.log(body);
+            });
+            req.on('end', function () {
+                console.log("request data complete");
+                var POST = qs.parse(body);
+                //do stuff
+            });
+            res.end("post request");
+        } else {
+            res.end("get request");
+        }
+
+    }).listen(4000);
+}
+
+function pipeFile(){
+    var http = require("http");
+    http.createServer(function(req, res) {
+       var fs = require('fs');
+       var readable = fs.createReadStream('subway.jpg');
+       res.writeHead(200, {'content-Type':'image/jpg'});
+       readable.pipe(res);
+    }).listen(4000);
+}
 
 function serveFile(){
     var http = require("http");
@@ -32,41 +69,6 @@ function serveFile(){
           }  
         })
     }).listen(4000);
-}
-
-/**
- * localhost:4000/travel/list.txt
- * req.url: /travel/list.txt
- */
-function header(){
-    var util = require("util");
-    require("http").createServer(function(req, res){
-       res.writeHead(200, {'Content-Type':'text/plain'});
-       res.write("http method: " + req.method + '\n');
-       res.write("http url: "+ req.url + '\n');
-       res.end(util.inspect(req.headers)); 
-    }).listen(4000);
-};
-
-function proxy(){
-    var http = require('http');
-    var url = require('url');
-    http.createServer(function(sreq, sres) {
-        var url_parts = url.parse(sreq.url);
-        var options = {
-            host: 'google.com',
-            port: 80,
-            path: url_parts.pathname,
-            method: sreq.method,
-            headers: sreq.headers
-        };
-        var creq = http.request(opts, function(cres) {
-            sres.writeHead(cres.statusCode, cres.headers);  
-            cres.pipe(sres);
-        });
-        sreq.pipe(creq);    
-    }).listen(80);
-    console.log("Server running");
 }
 
 function saveBody(){
