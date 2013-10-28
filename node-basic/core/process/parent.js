@@ -8,6 +8,6 @@ n.on('message', function(message){
    console.log("parent got message: ", message);
 })
 
-console.log(process);
+console.log("argv[0]: ", process.argv[0]);
 
 n.send({hello:'world'});

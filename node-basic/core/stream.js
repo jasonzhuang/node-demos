@@ -3,7 +3,6 @@ var fs = require('fs');
 (function execute(){
     //readFile();
     //writeFile();
-    //streamFile();
     //fsStat();
     //readBytes();
     echo();
@@ -63,12 +62,6 @@ function findFile(path, searchFile, callback){
           }) 
        });
     });
-}
-
-function streamFile(){
-    var input = fs.createReadStream('./result.txt', {flags:'r'});
-    var out = fs.createWriteStream('./result2.txt', {flags:'w'});
-    input.pipe(out);
 }
 
 function writeFile(){

@@ -6,9 +6,7 @@
 })();
 
 function fun(){
-   setTimeout(function(){
-       console.log(process.uptime());
-   }, 3000)
+  console.log("dirname: ",__dirname);
 }
 
 /**
