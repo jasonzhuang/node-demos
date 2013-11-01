@@ -1,9 +1,39 @@
 (function execute(){
-    postData()
+    //postData()
     //pipeFile()
     //serveFile();
     //saveBody();
+    proxy();
 })();
+
+function proxy(){
+   var http = require("http");
+
+   http.createServer(function(req, res){
+      if(req.url == '/fun'){
+         var req = http.get({host:'www.google.com.hk'}, function(res2){
+             console.log("got response: " + res2.statusCode);
+             //res2 is ReadableStream
+             res2.setEncoding('utf8');
+             var body = '';
+             res2.on('data', function(chunk){
+                 console.log(chunk);
+                 body += chunk;
+             });
+             res2.on('end', function(){
+                res.end(body, 'utf8');
+             });
+             res2.on('error', function(err){
+                console.log("got error");
+                res.writeHead(404,"can't redirect");
+                res.end("redirect error");
+             });
+         })
+      } else {
+          res.end("hello");
+      }
+   }).listen(4000)
+}
 
 /**
  * curl -F username='yougen' -F vip=true http://localhost:4000/
