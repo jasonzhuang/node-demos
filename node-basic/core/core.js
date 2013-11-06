@@ -6,22 +6,18 @@
 })();
 
 function fun(){
-  console.log("dirname: ",__dirname);
+
 }
 
 /**
  * module is singleton, cached, only initialize once.
  */
 function module(){
-    var Rect = require("./sample");
-    var Rect2 = require('./sample');
-    console.log("core get Rect");
-    var anotherPlace = function(){
-        var Rect3 = require('./sample');
-        console.log("anotherPlace");
-    }
-    anotherPlace();
+    var sample = require("./sample");
+    sample.fun();
+    console.log(sample);
 }
+
 
 /**
  * this refers to the EventEmitter that the listener was attached to

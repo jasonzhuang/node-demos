@@ -14,9 +14,15 @@ var app = connect();
 //app.use(connect.static(__dirname + '/public'));
 
 //use custom middleware
-/*app.use(logRequest(__dirname + '/logs'));
+/*
+ app.use(function(req, res, next){
+   console.log("In comes a " + req.method + " to " + req.url);
+   next();
+ })
+app.use(logRequest(__dirname + '/logs'));
 app.use(writeHeader('X-powered-By', 'Node'));
-app.use(connect.static(__dirname + '.public'));*/
+app.use(connect.static(__dirname + '.public'));
+*/
 
 
 //parse body  curl -X POST -F a=b; curl -X POST --data-urlencode a=b
@@ -56,4 +62,5 @@ app.use(function(req, res) {
 app.use(function(req, res){
    res.end(JSON.stringify(req.query));
 });*/
+
 app.listen(8080);
