@@ -1,4 +1,3 @@
 node-demos
 ==========
-
-This is for node
+Node examples and fun tools
