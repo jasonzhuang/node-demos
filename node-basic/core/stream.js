@@ -5,6 +5,7 @@ var fs = require('fs');
     //writeFile();
     //fsStat();
     //readBytes();
+    download();
     echo();
 })();
 
@@ -15,6 +16,17 @@ function echo(){
     process.stdin.resume();// open the faucet
     process.stdin.on('data', function(chunk) {
         process.stdout.write('data: ' + chunk);
+    });
+}
+
+function download(){
+    var fs = require('fs');
+    var http = require('http');
+
+    http.createServer(function(request, response) {
+        response.writeHead(200, {'Content-Type': 'image/png'});
+        var file = fs.createReadStream('icon.png');
+        file.pipe(response);
     });
 }
 
