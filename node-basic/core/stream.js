@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require("path");
 
 (function execute(){
     //readbytesFile();
@@ -6,8 +7,30 @@ var fs = require('fs');
     //download();
     //echo();
     //writeFile();
-    readFile();
+    //readFile();
+    renameFile(path.join(__dirname, "public"));
 })();
+
+//rename files under "public"
+function renameFile(filepath){
+   var SUFFIX = ".txt";
+   fs.readdir(filepath, function(err, files){
+       if(err){
+           throw err;
+       }
+
+       files.forEach(function(file, index){
+          var curfile = path.join(filepath, file);
+          console.log("handle file: " + curfile);
+          fs.stat(curfile, function(err, stats){
+              if(stats.isFile() && path.extname(curfile) === SUFFIX){
+                 var newName = index + ".txt";
+                 fs.rename(curfile, path.join(filepath, newName));
+              }
+          })
+       });
+   });
+}
 
 function readFile(){
     var readable = fs.createReadStream("test.txt", {encoding:"utf8"});
