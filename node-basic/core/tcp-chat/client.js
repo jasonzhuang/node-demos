@@ -6,8 +6,20 @@
 var net = require('net');
 var port = 4001;
 var client;
+var quitting = false;
 
 process.stdin.resume();
+
+process.stdin.on('data', function(data){
+   if(data.toString().trim().toLowerCase() === 'quit'){
+      quitting = true;
+      console.log("quitting...");
+      client.end();
+      process.stdin.pause();
+   }else {
+       client.write(data);
+   }
+});
 
 (function connect(){
    client = net.createConnection(port);

@@ -1,14 +1,19 @@
+var http = require("http");
+var fs = require("fs");
+var path = require("path");
+var fs = require("fs");
+var qs = require('querystring');
+var util = require('util');
+
 (function execute(){
     //postData()
     //pipeFile()
     //serveFile();
     //saveBody();
-    proxy();
+    //proxy();
 })();
 
 function proxy(){
-   var http = require("http");
-
    http.createServer(function(req, res){
       if(req.url == '/fun'){
          var req = http.get({host:'www.google.com.hk'}, function(res2){
@@ -39,10 +44,7 @@ function proxy(){
  * curl -F username='yougen' -F vip=true http://localhost:4000/
  */
 function postData() {
-    console.log("play...");
-    var qs = require('querystring');
-    var util = require('util');
-    require('http').createServer(function(req, res) {
+    http.createServer(function(req, res) {
         if (req.method == 'POST') {
             var body = '';
             req.on('data', function (data) {
@@ -63,9 +65,7 @@ function postData() {
 }
 
 function pipeFile(){
-    var http = require("http");
     http.createServer(function(req, res) {
-       var fs = require('fs');
        var readable = fs.createReadStream('subway.jpg');
        res.writeHead(200, {'content-Type':'image/jpg'});
        readable.pipe(res);
@@ -73,9 +73,6 @@ function pipeFile(){
 }
 
 function serveFile(){
-    var http = require("http");
-    var fs = require("fs");
-    var path = require("path");
     http.createServer(function(req, res){
         var file = path.normalize(req.url);
         console.log("request file: ", file);
@@ -102,8 +99,6 @@ function serveFile(){
 }
 
 function saveBody(){
-    var http = require('http');
-    var fs = require("fs");
     var sequence = 0;
     http.createServer(function(req, res){
         var fileName = "/cloud/log" + sequence + ".txt";
