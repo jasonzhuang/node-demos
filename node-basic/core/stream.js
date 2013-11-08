@@ -1,13 +1,27 @@
 var fs = require('fs');
 
 (function execute(){
-    //readFile();
+    //readbytesFile();
+    //writebytes();
+    //download();
+    //echo();
     //writeFile();
-    //fsStat();
-    //readBytes();
-    download();
-    echo();
+    readFile();
 })();
+
+function readFile(){
+    var readable = fs.createReadStream("test.txt", {encoding:"utf8"});
+    readable.pipe(process.stdout);
+}
+
+function writeFile() {
+    var writable = fs.createWriteStream("test.txt", {flags:'w+', encoding:'utf8'});
+    var content = ["Hello world", "Node is nice", "JS is greate"];
+    content.forEach(function(data, index){
+       writable.write(data);
+       writable.write("\r\n");
+   })
+}
 
 /**
  *  The stdin stream is paused by default, so one must call process.stdin.resume() to read from it
@@ -30,34 +44,6 @@ function download(){
     });
 }
 
-//read from 10-14
-function readBytes(){
-    fs.open("./result.txt", 'r+', function(err, fd){
-        if(err) throw err;
-            
-        var buffer = new Buffer(5),
-            bufferOffset = 0;
-        (function readIt(){
-           fs.read(fd, buffer, bufferOffset, buffer.length - bufferOffset, 10+readBytes, function(err, bytesRead){
-              if(err) throw err;
-               bufferOffset += bytesRead;
-              if(readBytes === buffer.length){
-                  console.log(buffer.toString());
-              }else {
-                  readIt();
-              }
-           });
-        })();
-    })
-}
-
-function fsStat(){
-    fs.stat("./result.txt", function(err, stats){
-       if(err) console.log(err.message);
-       console.log(stats);
-    });
-}
-
 function findFile(path, searchFile, callback){
     fs.readdir(path, function(err, files) {
        if(err) {
@@ -76,9 +62,9 @@ function findFile(path, searchFile, callback){
     });
 }
 
-function writeFile(){
+function writebytes(){
     fs.open('./result.txt', 'a', function(err, fd){
-       var writeBuffer = new Buffer("I'm Writing into file"),
+       var writeBuffer = new Buffer("\nI'm Writing into file"),
            bufferOffset = 0,
            bufferLength = writeBuffer.length,
            filePosition = null;
@@ -89,7 +75,7 @@ function writeFile(){
     });
 }
 
-function readFile(){
+function readbytes(){
     fs.open('./result.txt', 'r', function(err, fd){
         if(err) throw err;
         var buf = new Buffer(1024),
