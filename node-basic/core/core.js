@@ -6,7 +6,24 @@
 })();
 
 function fun(){
+    var path = require("path");
+    function parseURL(root, url) {
+        var base, pathnames, parts;
 
+        if (url.indexOf('??') === -1) {
+            url = url.replace('/', '/??');
+        }
+
+        parts = url.split('??');
+        base = parts[0];
+        pathnames = parts[1].split(',').map(function (value) {
+            return path.join(root, base, value);
+        });
+
+        console.log(pathnames);
+    }
+
+    parseURL(".", "http://assets.example.com/foo/??bar.js,baz.js")
 }
 
 /**

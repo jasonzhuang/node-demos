@@ -83,7 +83,6 @@ function download(response, request){
 }
 
 function show(response, request) {
-    console.log("Request handler 'show' was called");
     fs.readFile(BASE + "test.png", "binary", function(error, data){
         if(error) {
             response.writeHead(500, {"Content-Type": "text/plain"});
