@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title><%= title%></title>
+    <meta charset="utf-8">
+    <link href="http://style.aliunicorn.com/css/6v/apollo/core/core-sc.css" rel="stylesheet">
+    <link href="http://style.aliunicorn.com/css/6v/apollo/mod/button/button-sc.css" rel="stylesheet">
+    <link href="/styles/main.css" rel="stylesheet">
+</head>
+<body class="activity-wrapper">
+    <% activities.forEach(function(activity){ %>
+    <h3>
+        <%= activity.title %>
+        <a class="ui-button  ui-button-primary ui-button-medium" data-role="join" data-slug="<%= activity.slug %>">Join Now</a>
+    </h3>
+    <div><%= activity.content %></div>
+    <% }); %>
+    <div class="util-hidden"></div>
+</body>
+<script src="http://style.aliunicorn.com/js/6v/atom/atom-sc.js"></script>
+<script>
+    seajs.use("$",function($){
+        $("[data-role=join]").on("click", function(){
+            $.post("/join",{slug: $(this).attr('data-slug')}, success:function(data){
+                alert("join success");
+            }});
+        });
+    });
+</script>
+</html>
