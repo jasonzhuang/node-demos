@@ -6,7 +6,7 @@ var qs = require('querystring');
 var util = require('util');
 
 (function execute(){
-    postData()
+    postData();
     //pipeFile()
     //serveFile();
     //saveBody();
@@ -54,9 +54,11 @@ function postData() {
             req.on('end', function () {
                 console.log("request data complete");
             });
-            res.end("post request");
+            var result = '<!DOCTYPE html><html><head></head><body><script>console.info("message from server")</script></body></html>';
+            //var result = "hello";
+            res.end(result);
         } else {
-            res.end("get request");
+            res.end("post fail");
         }
 
     }).listen(8100);

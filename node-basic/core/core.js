@@ -6,7 +6,10 @@
 })();
 
 function fun(){
-    var path = require("path");
+    var name = "jason";
+    //console.log("sss");
+    console.log(Buffer.byteLength(name,'utf-8'));
+    /*var path = require("path");
     function parseURL(root, url) {
         var base, pathnames, parts;
 
@@ -23,7 +26,7 @@ function fun(){
         console.log(pathnames);
     }
 
-    parseURL(".", "http://assets.example.com/foo/??bar.js,baz.js")
+    parseURL(".", "http://assets.example.com/foo/??bar.js,baz.js")；*/
 }
 
 /**
