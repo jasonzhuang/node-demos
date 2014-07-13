@@ -1,0 +1,5 @@
+{
+    "name":"atom/autocomplete",
+    "version":"1.0.0",
+    "output":"autocomplete-all.js"
+}

@@ -22,8 +22,8 @@ var server = http.createServer(function(request, response){
                 response.end();
             }else {
                 if(stats.isDirectory()){
-                    realPath = path.join(realPath, "/", config.Welcome.file);
-                    pathHandle(realPath);
+                    /*realPath = path.join(realPath, "/", config.Welcome.file);
+                    pathHandle(realPath);*/
                 }else {
                     var ext = path.extname(pathname);
                     ext = ext ? ext.slice(1) : "";

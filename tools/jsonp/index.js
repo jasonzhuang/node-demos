@@ -32,7 +32,7 @@ app.get('/endpoint', function(req, res){
     console.log('body: ' + JSON.stringify(req.body));
     console.log('query: ' + JSON.stringify(req.query));
 
-    res.header('Content-type','application/json');
+    res.header('Content-type','text/javascript');
     res.header('Charset','utf8');
     res.send(req.query.callback + '('+ JSON.stringify(obj) + ');');
 });

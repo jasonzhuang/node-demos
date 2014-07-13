@@ -1,0 +1,5 @@
+{
+    "name":"atom/balloon",
+    "version":"1.0.0",
+    "output":"_balloon-all.js"
+}
